@@ -23,5 +23,5 @@ Tests:
 ------
 
 .. code-block:: sh
-
+   $ export BATTLE_NET_APIKEY=<BATTLE_NET_APIKEY>
    $ make test
