@@ -7,4 +7,3 @@ build/
 *.egg-info
 venv/
 dist/
-MANIFEST
