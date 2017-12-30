@@ -1,35 +1,3 @@
-from distutils.core import setup
-
-setup(
-    name='bnet',
-    packages=['bnet'],
-    version='0.1',
-    description='Battle.net API Wrapper',
-    author='Nikita Zagorskiy',
-    author_email='toltenos@gmail.com',
-    url='https://github.com/nzagorsky/bnet',
-    download_url='https://github.com/nzagorsky/bnet/archive/0.1.tar.gz',
-    keywords=['battle.net', 'warcraft', 'diablo', 'sc2', 'wow'],
-    classifiers=[],
-)
-
-#!/usr/bin/env python
-# setup
-# Setup script for installing foo
-#
-# Author:   Benjamin Bengfort <benjamin@bengfort.com>
-# Created:  Wed Jan 20 11:48:43 2016 -0500
-#
-# Copyright (C) 2015 Bengfort.com
-# For license information, see LICENSE.txt
-#
-# ID: setup.py [] benjamin@bengfort.com $
-
-"""
-Setup script for installing foo.
-See https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/
-"""
-
 ##########################################################################
 ## Imports
 ##########################################################################
@@ -83,6 +51,10 @@ EXCLUDES     = (
     "tests", "bin", "docs", "fixtures", "register", "notebooks",
 )
 
+INSTALL_REQUIRES = [
+    'requests'
+]
+
 ##########################################################################
 ## Helper Functions
 ##########################################################################
@@ -133,10 +105,11 @@ config = {
     "url": REPOSITORY,
     "download_url": "{}/tarball/v{}".format(REPOSITORY, get_version()),
     "packages": find_packages(where=PROJECT, exclude=EXCLUDES),
-    "install_requires": list(get_requires()),
+    "install_requires": INSTALL_REQUIRES,
     "classifiers": CLASSIFIERS,
     "keywords": KEYWORDS,
     "zip_safe": False,
+    "include_package_data": True,
     # "scripts": ['bin/app.py'],
 }
 
