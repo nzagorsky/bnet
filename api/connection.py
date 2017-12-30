@@ -16,7 +16,11 @@ class BattleNetConnection(object):
     def __init__(self, apikey='', locale='en_GB', region='eu', game='wow'):
         """
         Connection class for Battle.net API client.
-        ;param str apikey;
+
+        :param str apikey: If None is passed env key is used.
+        :param str game:
+        :param str locale:
+        :param str region:
         """
         apikey = apikey or os.environ.get('BATTLE_NET_APIKEY', '')
         if not apikey:
