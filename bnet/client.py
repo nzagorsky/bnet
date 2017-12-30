@@ -1,4 +1,4 @@
-from api.exceptions import IncorrectMethod
+from bnet.exceptions import IncorrectMethod
 
 
 class BattleNetClient(object):

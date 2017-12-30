@@ -4,8 +4,8 @@ import urllib
 
 import requests
 
-from api.client import BattleNetClient
-from api.exceptions import BattleNetError
+from bnet.client import BattleNetClient
+from bnet.exceptions import BattleNetError
 
 LOG = logging.getLogger('battle.net')
 
@@ -32,6 +32,7 @@ class BattleNetConnection(object):
         self.locale = locale
         self.game = game
         self.region = region
+
         self.session = requests.Session()
 
     def _build_url(self, parameters, endpoint, endpoint_arguments, **kwargs):

@@ -2,8 +2,8 @@
 import pytest
 from pytest import raises
 
-from api.connection import BattleNetConnection
-from api.exceptions import BattleNetError
+from bnet.connection import BattleNetConnection
+from bnet.exceptions import BattleNetError
 
 
 # TODO add mocks for requests lib to avoid bnet servers queries.
