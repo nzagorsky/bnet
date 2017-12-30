@@ -6,7 +6,6 @@ class BattleNetClient(object):
     def __init__(self, connection):
         self.connection = connection
 
-        self._call_data = None
         self._method = None
         self._endpoint = None
 
