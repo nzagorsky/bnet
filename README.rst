@@ -1,6 +1,6 @@
 
-Battle.net API for Python
-=========================
+Battle.net API wrapper for Python
+=================================
 
 
 Installation:
