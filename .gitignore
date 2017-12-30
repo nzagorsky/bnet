@@ -1,5 +1,7 @@
-
 .ropeproject
 .cache
 __pycache__
 *.pyc
+
+dist/
+MANIFEST
