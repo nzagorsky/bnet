@@ -7,28 +7,32 @@ import requests
 from bnet.client import BattleNetClient
 from bnet.exceptions import BattleNetError
 
-LOG = logging.getLogger('battle.net')
+LOG = logging.getLogger("battle.net")
 
-BASE_URL = 'https://{region}.api.battle.net/{game}/{endpoint}/{endpoint_arguments}?{parameters}'
+BASE_URL = "https://{region}.api.blizzard.com/{game}/{endpoint}/{endpoint_arguments}?{parameters}"
+
+# https://eu.api.blizzard.com/wow/auction/data/Kazzak?locale=en_GB&access_token=ACCESS_TOKEN_HERE
 
 
 class BattleNetConnection(object):
-    def __init__(self, apikey='', locale='en_GB', region='eu', game='wow'):
+    def __init__(self, access_token="", locale="en_GB", region="eu", game="wow"):
         """
         Connection class for Battle.net API client.
 
-        :param str apikey: If None is passed env key is used.
+        :param str access_token: If None is passed env key is used.
         :param str game:
         :param str locale:
         :param str region:
         """
-        apikey = apikey or os.environ.get('BATTLE_NET_APIKEY', '')
-        if not apikey:
-            LOG.critical('No Battle.net API key provided')
-            raise ValueError('Set BATTLE_NET_APIKEY env variable or pass '
-                             'apikey as a parameter')
+        access_token = access_token or os.environ.get("BATTLE_NET_ACCESS_TOKEN", "")
 
-        self.apikey = apikey
+        if not access_token:
+            LOG.critical("No Battle.net API key provided")
+            raise ValueError(
+                "Set BATTLE_NET_ACCESS_TOKEN env variable or pass access_token as a parameter"
+            )
+
+        self.access_token = access_token
         self.locale = locale
         self.game = game
         self.region = region
@@ -40,11 +44,11 @@ class BattleNetConnection(object):
         Endpoint arguments is passed as arguments to `BattleNetClient` methods.
         """
         if isinstance(parameters, dict):
-            parameters.update({'apikey': self.apikey, 'locale': self.locale})
+            parameters.update({"access_token": self.access_token, "locale": self.locale})
             formatted_parameters = urllib.parse.urlencode(parameters)
 
         else:
-            raise TypeError('Invalid parameters passed. Should be dict.')
+            raise TypeError("Invalid parameters passed. Should be dict.")
 
         url = BASE_URL.format(
             region=self.region,
@@ -53,17 +57,14 @@ class BattleNetConnection(object):
             endpoint_arguments=endpoint_arguments,
             parameters=formatted_parameters,
         )
-        LOG.debug('URL: {}'.format(url))
+        LOG.debug("URL: {}".format(url))
         return url
 
-    def _make_request(self, method, endpoint, endpoint_arguments, parameters,
-                      **kwargs):
-
-        url = self._build_url(parameters, endpoint, endpoint_arguments,
-                              **kwargs)
-        LOG.debug('Fetching')
+    def _make_request(self, method, endpoint, endpoint_arguments, parameters, **kwargs):
+        url = self._build_url(parameters, endpoint, endpoint_arguments, **kwargs)
+        LOG.debug("Fetching")
         response = self.session.request(method, url)
-        LOG.debug('Got response {}'.format(response.status_code))
+        LOG.debug(f"Response {response.status_code}")
 
         if not 199 < response.status_code < 300:
             raise BattleNetError(response.json())
